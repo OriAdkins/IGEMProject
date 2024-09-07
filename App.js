@@ -2,16 +2,20 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, TextInput, Button, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import CustomButton from './components/Button';
-/*
-export default function App() {
+
+//login page function
+function LoginPage({ navigation }) {
   const { control, handleSubmit, formState: { errors } } = useForm();
   const [submittedData, setSubmittedData] = useState(null);
 
   const onSubmit = (data) => {
     console.log('Submitted Data:', data);
     setSubmittedData(data);
+    navigation.navigate('Home');
   };
 
   return (
@@ -21,27 +25,32 @@ export default function App() {
 
         <Controller
           control={control}
-          render={({ field }) => (
+          render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              {...field}
               style={styles.input}
               placeholder="Enter Username"
               placeholderTextColor="#A9A9A9"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
             />
           )}
           name="username"
           rules={{ required: 'You must enter your username' }}
         />
-        {errors.name && <Text style={styles.errorText}>{errors.name.message}</Text>}
+        {errors.username && <Text style={styles.errorText}>{errors.username.message}</Text>}
 
         <Controller
           control={control}
-          render={({ field }) => (
+          render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              {...field}
               style={styles.input}
               placeholder="Enter Password"
               placeholderTextColor="#A9A9A9"
+              secureTextEntry
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
             />
           )}
           name="password"
@@ -52,7 +61,7 @@ export default function App() {
         <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
           <Text style={styles.buttonText}>Log In</Text>
         </TouchableOpacity>
-  
+
         {submittedData && (
           <View style={styles.submittedContainer}>
             <Text style={styles.submittedTitle}>Submitted Data:</Text>
@@ -67,6 +76,32 @@ export default function App() {
   );
 }
 
+// Home Screen
+function HomeScreen() {
+  return (
+    <View style={styles.container}>
+      <StatusBar style="auto" />
+      <CustomButton label="Device 1" />
+      <CustomButton label="Device 2" />
+      <CustomButton label="Device 3" />
+    </View>
+  );
+}
+
+const Stack = createStackNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Login" component={LoginPage} />
+        <Stack.Screen name="Home" component={HomeScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+//css for styling
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
@@ -78,19 +113,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 16,
-    fontFamily: "Impact,Charcoal,sans-serif",
   },
   input: {
     width: '90%',
-    height: 70,
+    height: 50,
     borderColor: 'gray',
     borderWidth: 2,
     borderRadius: 10,
-    marginBottom: 30,
+    marginBottom: 20,
     padding: 8,
-    color: 'black',
     backgroundColor: 'white',
-    fontSize: 20,
+    fontSize: 18,
   },
   errorText: {
     color: 'red',
@@ -98,8 +131,8 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#6096A6',
-    paddingVertical: 24,
-    paddingHorizontal: 70,
+    paddingVertical: 15,
+    paddingHorizontal: 60,
     borderRadius: 8,
     marginTop: 30,
   },
@@ -115,38 +148,5 @@ const styles = StyleSheet.create({
   submittedTitle: {
     fontWeight: 'bold',
     color: 'white',
-  },
-});
-*/
-
-////////////////////////////////
-
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <CustomButton label="Device 1"/>
-      <CustomButton label="Device 2"/>
-      <CustomButton label="Device 3"/>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#36454F',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    color: '#FFFFFF',
-  },
-  button: {
-    backgroundColor: '#6096A6',
-    paddingVertical: 24,
-    paddingHorizontal: 70,
-    borderRadius: 8,
-    marginTop: 30,
   },
 });
