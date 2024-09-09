@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { View, Text, TextInput, Button, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Modal, Button, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -76,17 +76,76 @@ function LoginPage({ navigation }) {
   );
 }
 
-// Home Screen
+// Main Home Page, where all the magic is.
 function HomeScreen() {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedDevice, setSelectedDevice] = useState('Connect to Device'); // state variable to track selected modal
+
+  // function to handle device selection, all it does is update the state of the main button.\
+  // when clicked it will close the modal and set the name of the button to whatever was cliked
+  const handleDeviceSelect = (device) => {
+    setSelectedDevice(device); // update button
+    setModalVisible(false);    // close modal on selection
+  };
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
-      <CustomButton label="Device 1" />
-      <CustomButton label="Device 2" />
-      <CustomButton label="Device 3" />
-    </View>
+
+      {/* button object for modal (uses state variable setModalVisible) */}
+      <TouchableOpacity
+        style={styles.mainButton}
+        onPress={() => setModalVisible(true)}
+      >
+        <Text style={styles.mainButtonText}>{selectedDevice}</Text>
+      </TouchableOpacity>
+
+      {/* modal popup for devices */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Available Devices</Text>
+
+            <TouchableOpacity
+              style={styles.deviceButton}
+              onPress={() => handleDeviceSelect('Device 1')}
+            >
+              <Text style={styles.deviceText}>Device 1</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.deviceButton}
+              onPress={() => handleDeviceSelect('Device 2')}
+            >
+              <Text style={styles.deviceText}>Device 2</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.deviceButton}
+              onPress={() => handleDeviceSelect('Device 3')}
+            >
+              <Text style={styles.deviceText}>Device 3</Text>
+            </TouchableOpacity>
+
+            {/* closes the modal */}
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setModalVisible(false)}
+            >
+              <Text style={styles.closeButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+    </SafeAreaView>
   );
 }
+
 
 const Stack = createStackNavigator();
 
@@ -103,6 +162,7 @@ export default function App() {
 
 //css for styling
 const styles = StyleSheet.create({
+  // Login Screen Styles
   safeArea: {
     flex: 1,
     backgroundColor: '#1D3056',
@@ -112,7 +172,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#1D3056',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 16,
+    padding: 20,
+  },
+  title: {
+    fontSize: 28,
+    color: 'white',
+    marginBottom: 40,
+    fontWeight: 'bold',
   },
   input: {
     width: '90%',
@@ -121,9 +187,10 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 10,
     marginBottom: 20,
-    padding: 8,
+    padding: 10,
+    color: 'black',
     backgroundColor: 'white',
-    fontSize: 18,
+    fontSize: 16,
   },
   errorText: {
     color: 'red',
@@ -132,21 +199,85 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#6096A6',
     paddingVertical: 15,
-    paddingHorizontal: 60,
+    paddingHorizontal: 80,
     borderRadius: 8,
-    marginTop: 30,
+    marginTop: 20,
   },
   buttonText: {
     color: 'white',
     fontSize: 20,
     fontWeight: 'bold',
-    textAlign: 'center',
   },
   submittedContainer: {
     marginTop: 20,
+    alignItems: 'center',
   },
   submittedTitle: {
     fontWeight: 'bold',
     color: 'white',
+    marginBottom: 10,
+  },
+  submittedText: {
+    color: 'white',
+  },
+
+  // Home Screen Styles
+  mainButton: {
+    backgroundColor: '#6096A6',
+    paddingVertical: 20,
+    paddingHorizontal: 60,
+    borderRadius: 8,
+    marginTop: 50,
+  },
+  mainButtonText: {
+    color: 'white',
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+
+  // Modal Styles
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  deviceButton: {
+    backgroundColor: '#6096A6',
+    paddingVertical: 15,
+    paddingHorizontal: 40,
+    borderRadius: 8,
+    marginVertical: 10,
+  },
+  deviceText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  closeButton: {
+    marginTop: 20,
+    backgroundColor: '#FF6B6B',
+    paddingVertical: 12,
+    paddingHorizontal: 50,
+    borderRadius: 8,
+  },
+  closeButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
