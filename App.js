@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { View, Text, TextInput, Modal, Button, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Modal, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import CustomButton from './components/Button';
-
-//login page function
 function LoginPage({ navigation }) {
   const { control, handleSubmit, formState: { errors } } = useForm();
   const [submittedData, setSubmittedData] = useState(null);
@@ -19,15 +16,15 @@ function LoginPage({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.container}>
-        <StatusBar style="auto" />
+    <SafeAreaView style={loginStyles.safeArea}>
+      <View style={loginStyles.container}>
+        <Text style={loginStyles.title}>Login</Text>
 
         <Controller
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              style={styles.input}
+              style={loginStyles.input}
               placeholder="Enter Username"
               placeholderTextColor="#A9A9A9"
               onBlur={onBlur}
@@ -38,13 +35,13 @@ function LoginPage({ navigation }) {
           name="username"
           rules={{ required: 'You must enter your username' }}
         />
-        {errors.username && <Text style={styles.errorText}>{errors.username.message}</Text>}
+        {errors.username && <Text style={loginStyles.errorText}>{errors.username.message}</Text>}
 
         <Controller
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              style={styles.input}
+              style={loginStyles.input}
               placeholder="Enter Password"
               placeholderTextColor="#A9A9A9"
               secureTextEntry
@@ -56,88 +53,82 @@ function LoginPage({ navigation }) {
           name="password"
           rules={{ required: 'You must enter your password' }}
         />
-        {errors.password && <Text style={styles.errorText}>{errors.password.message}</Text>}
+        {errors.password && <Text style={loginStyles.errorText}>{errors.password.message}</Text>}
 
-        <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
-          <Text style={styles.buttonText}>Log In</Text>
+        <TouchableOpacity style={loginStyles.button} onPress={handleSubmit(onSubmit)}>
+          <Text style={loginStyles.buttonText}>Log In</Text>
         </TouchableOpacity>
 
         {submittedData && (
-          <View style={styles.submittedContainer}>
-            <Text style={styles.submittedTitle}>Submitted Data:</Text>
-            <Text style={styles.submittedTitle}>Username: {submittedData.username}</Text>
-            <Text style={styles.submittedTitle}>Password: {submittedData.password}</Text>
+          <View style={loginStyles.submittedContainer}>
+            <Text style={loginStyles.submittedTitle}>Submitted Data:</Text>
+            <Text style={loginStyles.submittedText}>Username: {submittedData.username}</Text>
+            <Text style={loginStyles.submittedText}>Password: {submittedData.password}</Text>
           </View>
         )}
-        
+
         <StatusBar style="auto" />
       </View>
     </SafeAreaView>
   );
 }
 
-// Main Home Page, where all the magic is.
 function HomeScreen() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedDevice, setSelectedDevice] = useState('Connect to Device'); // state variable to track selected modal
+  const [selectedDevice, setSelectedDevice] = useState('Connect to Device'); // State to track selected device
 
-  // function to handle device selection, all it does is update the state of the main button.\
-  // when clicked it will close the modal and set the name of the button to whatever was cliked
+  // Function to handle device selection
   const handleDeviceSelect = (device) => {
-    setSelectedDevice(device); // update button
-    setModalVisible(false);    // close modal on selection
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={homeStyles.container}>
       <StatusBar style="auto" />
 
-      {/* button object for modal (uses state variable setModalVisible) */}
+      {/* Button to Open Modal */}
       <TouchableOpacity
-        style={styles.mainButton}
+        style={homeStyles.mainButton}
         onPress={() => setModalVisible(true)}
       >
-        <Text style={styles.mainButtonText}>{selectedDevice}</Text>
+        <Text style={homeStyles.mainButtonText}>{selectedDevice}</Text>
       </TouchableOpacity>
 
-      {/* modal popup for devices */}
       <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Available Devices</Text>
+        <View style={homeStyles.modalContainer}>
+          <View style={homeStyles.modalContent}>
+            <Text style={homeStyles.modalTitle}>Available Devices</Text>
 
             <TouchableOpacity
-              style={styles.deviceButton}
+              style={homeStyles.deviceButton}
               onPress={() => handleDeviceSelect('Device 1')}
             >
-              <Text style={styles.deviceText}>Device 1</Text>
+              <Text style={homeStyles.deviceText}>Device 1</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={styles.deviceButton}
+              style={homeStyles.deviceButton}
               onPress={() => handleDeviceSelect('Device 2')}
             >
-              <Text style={styles.deviceText}>Device 2</Text>
+              <Text style={homeStyles.deviceText}>Device 2</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={styles.deviceButton}
+              style={homeStyles.deviceButton}
               onPress={() => handleDeviceSelect('Device 3')}
             >
-              <Text style={styles.deviceText}>Device 3</Text>
+              <Text style={homeStyles.deviceText}>Device 3</Text>
             </TouchableOpacity>
 
-            {/* closes the modal */}
             <TouchableOpacity
-              style={styles.closeButton}
+              style={homeStyles.closeButton}
               onPress={() => setModalVisible(false)}
             >
-              <Text style={styles.closeButtonText}>Close</Text>
+              <Text style={homeStyles.closeButtonText}>Close</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -145,7 +136,6 @@ function HomeScreen() {
     </SafeAreaView>
   );
 }
-
 
 const Stack = createStackNavigator();
 
@@ -160,9 +150,7 @@ export default function App() {
   );
 }
 
-//css for styling
-const styles = StyleSheet.create({
-  // Login Screen Styles
+const loginStyles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: '#1D3056',
@@ -220,14 +208,23 @@ const styles = StyleSheet.create({
   submittedText: {
     color: 'white',
   },
+});
 
-  // Home Screen Styles
+// Styling for Home Screen
+const homeStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#1D3056',
+    paddingTop: '10%', // Move content down from the top of the screen
+    paddingHorizontal: 20,
+  },
   mainButton: {
     backgroundColor: '#6096A6',
     paddingVertical: 20,
     paddingHorizontal: 60,
     borderRadius: 8,
-    marginTop: 50,
+    marginTop: '5%',  // Position the button within the upper 1/4th of the screen
+    alignSelf: 'center',
   },
   mainButtonText: {
     color: 'white',
