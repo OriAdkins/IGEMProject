@@ -5,10 +5,13 @@ import { useForm, Controller } from 'react-hook-form';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
+// login page screen
 function LoginPage({ navigation }) {
+  // state variables that handle forms (spencers code)
   const { control, handleSubmit, formState: { errors } } = useForm();
   const [submittedData, setSubmittedData] = useState(null);
 
+  // a function that handles the onsubmit request
   const onSubmit = (data) => {
     console.log('Submitted Data:', data);
     setSubmittedData(data);
@@ -73,19 +76,22 @@ function LoginPage({ navigation }) {
   );
 }
 
+// home screen function
 function HomeScreen() {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectedDevice, setSelectedDevice] = useState('Connect to Device'); // State to track selected device
+  const [modalVisible, setModalVisible] = useState(false); // state to set modal visible
+  const [selectedDevice, setSelectedDevice] = useState('Connect to Device'); // state to track selected device
 
-  // Function to handle device selection
+  // sets device and modal visibility on button click
   const handleDeviceSelect = (device) => {
+    setSelectedDevice(device);  
+    setModalVisible(false);    
   };
 
   return (
     <SafeAreaView style={homeStyles.container}>
       <StatusBar style="auto" />
 
-      {/* Button to Open Modal */}
+      {/* main button that opens modal */}
       <TouchableOpacity
         style={homeStyles.mainButton}
         onPress={() => setModalVisible(true)}
@@ -93,6 +99,7 @@ function HomeScreen() {
         <Text style={homeStyles.mainButtonText}>{selectedDevice}</Text>
       </TouchableOpacity>
 
+      {/* modal screen */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -124,6 +131,7 @@ function HomeScreen() {
               <Text style={homeStyles.deviceText}>Device 3</Text>
             </TouchableOpacity>
 
+            {/* closes modal by setting visibility */}
             <TouchableOpacity
               style={homeStyles.closeButton}
               onPress={() => setModalVisible(false)}
@@ -150,6 +158,7 @@ export default function App() {
   );
 }
 
+// styling for Login Page
 const loginStyles = StyleSheet.create({
   safeArea: {
     flex: 1,
@@ -210,12 +219,12 @@ const loginStyles = StyleSheet.create({
   },
 });
 
-// Styling for Home Screen
+// styling for Home Screen
 const homeStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#1D3056',
-    paddingTop: '10%', // Move content down from the top of the screen
+    paddingTop: '10%', 
     paddingHorizontal: 20,
   },
   mainButton: {
@@ -223,7 +232,7 @@ const homeStyles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 60,
     borderRadius: 8,
-    marginTop: '5%',  // Position the button within the upper 1/4th of the screen
+    marginTop: '5%',  
     alignSelf: 'center',
   },
   mainButtonText: {
@@ -233,7 +242,7 @@ const homeStyles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  // Modal Styles
+  // modal Styles
   modalContainer: {
     flex: 1,
     justifyContent: 'flex-end',
