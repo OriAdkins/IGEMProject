@@ -80,11 +80,19 @@ function LoginPage({ navigation }) {
 function HomeScreen() {
   const [modalVisible, setModalVisible] = useState(false); // state to set modal visible
   const [selectedDevice, setSelectedDevice] = useState('Connect to Device'); // state to track selected device
+  const [deviceDisplay, setDeviceDisplay] = useState('No Device Conencted'); // state to set device display
 
   // sets device and modal visibility on button click
   const handleDeviceSelect = (device) => {
-    setSelectedDevice(device);  
-    setModalVisible(false);    
+    setSelectedDevice(device);
+    setModalVisible(false);
+    setDeviceDisplay(device);
+  };
+
+  // run test button to use specified device and naviagte to results page
+  const onRunTest = () => {
+    //selectedDevice
+    navigation.navigate('Results');
   };
 
   return (
@@ -96,8 +104,13 @@ function HomeScreen() {
         style={homeStyles.mainButton}
         onPress={() => setModalVisible(true)}
       >
-        <Text style={homeStyles.mainButtonText}>{selectedDevice}</Text>
+        <Text style={homeStyles.mainButtonText}>{'Select Device'}</Text>
       </TouchableOpacity>
+
+      {/* device display (would be an image if we knew what it looked like) */}
+      <View style={homeStyles.mainBox}>
+        <Text style={homeStyles.displayText}>{deviceDisplay}</Text>
+      </View>
 
       {/* modal screen */}
       <Modal
@@ -141,6 +154,16 @@ function HomeScreen() {
           </View>
         </View>
       </Modal>
+
+      {/* button to run device -> naviage to next screen */}
+      <TouchableOpacity
+        style={homeStyles.runButton}
+        onPress={() => onRunTest()}
+        >
+        <Text style={homeStyles.mainButtonText}>{'Run Test'}</Text>
+      </TouchableOpacity>
+
+
     </SafeAreaView>
   );
 }
@@ -226,13 +249,14 @@ const homeStyles = StyleSheet.create({
     backgroundColor: '#1D3056',
     paddingTop: '10%', 
     paddingHorizontal: 20,
+    alignItems: 'center',
   },
   mainButton: {
     backgroundColor: '#6096A6',
     paddingVertical: 20,
     paddingHorizontal: 60,
     borderRadius: 8,
-    marginTop: '5%',  
+    marginTop: '15%',  
     alignSelf: 'center',
   },
   mainButtonText: {
@@ -240,6 +264,31 @@ const homeStyles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  mainBox: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    marginTop: 50,
+    marginBottom: 75,
+    width: 270,
+    height: 100,
+    borderRadius: 14,
+  },
+  displayText: {
+    color: 'black',
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  runButton: {
+    backgroundColor: '#6096A6',
+    paddingVertical: 20,
+    paddingHorizontal: 60,
+    borderRadius: 8, 
+    alignSelf: 'center',
+    marginBottom: 40,
   },
 
   // modal Styles
