@@ -7,12 +7,14 @@ function HomeScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false); // state to set modal visible
   const [selectedDevice, setSelectedDevice] = useState('Connect to Device'); // state to track selected device
   const [deviceDisplay, setDeviceDisplay] = useState('No Device Connected'); // state to set device display
+  const [isVisible, setIsVisible] = useState(false);
 
   // sets device and modal visibility on button click
   const handleDeviceSelect = (device) => {
     setSelectedDevice(device);
     setModalVisible(false);
     setDeviceDisplay(device);
+    setIsVisible(true); // For device image
   };
 
   // run test button to use specified device and navigate to results page
@@ -34,8 +36,14 @@ function HomeScreen({ navigation }) {
 
       {/* device display (would be an image if we knew what it looked like) */}
       <View style={styles.mainBox}>
+      {isVisible && (
+        <View>
+          <img src={'./assets/IGEM_device.png'} style={styles.image}/>
         <Text style={styles.displayText}>{deviceDisplay}</Text>
+        </View>
+      )}
       </View>
+      
 
       {/* modal screen */}
       <Modal
@@ -124,11 +132,19 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 14,
   },
+  image: {
+    resizeMode: 'contain',
+    height: 130,
+    width: 190,
+    borderRadius: 8,
+    borderColor: 'black',
+  },
   displayText: {
     color: 'black',
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
+    paddingTop: 14,
   },
   runButton: {
     backgroundColor: '#6096A6',
