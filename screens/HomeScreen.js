@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { View, Text, Modal, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Modal, SafeAreaView, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 // home screen function
 function HomeScreen({ navigation }) {
@@ -38,7 +38,7 @@ function HomeScreen({ navigation }) {
       <View style={styles.mainBox}>
       {isVisible && (
         <View>
-          <img src={'./assets/IGEM_device.png'} style={styles.image}/>
+          <Image source={require('../assets/IGEM_device.png')} style={styles.image}/>
         <Text style={styles.displayText}>{deviceDisplay}</Text>
         </View>
       )}
