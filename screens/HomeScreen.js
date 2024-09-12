@@ -20,10 +20,19 @@ function HomeScreen({ route ,navigation }) {
 
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: `Welcome, ${username}`,  
-      headerTitleAlign: 'center',  
+      headerTitle: `Welcome, ${username}`,
+      headerTitleAlign: 'center',
+      headerLeft: () => (
+        <TouchableOpacity onPress={handleLogout}>
+          <Text style={styles.logoutButtonText}>Logout</Text>
+        </TouchableOpacity>
+      ),
     });
   }, [navigation, username]);
+
+  const handleLogout = () => {
+    navigation.navigate('Login'); 
+  }
 
   // run test button to use specified device and navigate to results page
   const onRunTest = () => {
