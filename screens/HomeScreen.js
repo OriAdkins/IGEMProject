@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, Modal, SafeAreaView, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 // home screen function
-function HomeScreen({ navigation }) {
+function HomeScreen({ route ,navigation }) {
+  const { username } = route.params;
   const [modalVisible, setModalVisible] = useState(false); // state to set modal visible
   const [selectedDevice, setSelectedDevice] = useState('Connect to Device'); // state to track selected device
   const [deviceDisplay, setDeviceDisplay] = useState('No Device Connected'); // state to set device display
@@ -16,6 +17,13 @@ function HomeScreen({ navigation }) {
     setDeviceDisplay(device);
     setIsVisible(true); // For device image
   };
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: `Welcome, ${username}`,  
+      headerTitleAlign: 'center',  
+    });
+  }, [navigation, username]);
 
   // run test button to use specified device and navigate to results page
   const onRunTest = () => {

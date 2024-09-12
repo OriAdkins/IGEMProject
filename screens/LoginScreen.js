@@ -13,7 +13,7 @@ function LoginPage({ navigation }) {
   const onSubmit = (data) => {
     console.log('Submitted Data:', data);
     setSubmittedData(data);
-    navigation.navigate('Home');
+    navigation.navigate('Home', { username: data.username });
   };
 
   return (
