@@ -19,8 +19,12 @@ function HomeScreen({ navigation }) {
 
   // run test button to use specified device and navigate to results page
   const onRunTest = () => {
-    navigation.navigate('Results');
+    const results = {
+      TMA: 69  // example value
+    };
+    navigation.navigate('Results', { results });
   };
+  
 
   return (
     <SafeAreaView style={styles.container}>
