@@ -10,9 +10,12 @@ const getTmaColor = (tma) => {
 
 const ResultsScreen = ({ route, navigation }) => {
   const { results } = route.params;
+  const { username } = route.params;
+  //console.log(username)
 
   const tmaColor = getTmaColor(results.TMA);
 
+    // this needs fixed, it can navigate back fine, but needs to pass the username back? Not sure how to address.
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Test Results</Text>
@@ -21,7 +24,7 @@ const ResultsScreen = ({ route, navigation }) => {
         <Text style={styles.label}>TMA: {results.TMA} ppm</Text>
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home', { username })}> 
         <Text style={styles.buttonText}>Back to Home</Text>
       </TouchableOpacity>
     </SafeAreaView>

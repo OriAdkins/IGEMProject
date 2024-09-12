@@ -37,7 +37,7 @@ function HomeScreen({ route ,navigation }) {
   // run test button to use specified device and navigate to results page
   const onRunTest = () => {
     const results = {
-      TMA: 69  // example value
+      TMA: 30  // example value
     };
     navigation.navigate('Results', { results });
   };
