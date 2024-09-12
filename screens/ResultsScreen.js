@@ -10,7 +10,7 @@ const getTmaColor = (tma) => {
 
 const ResultsScreen = ({ route, navigation }) => {
   const { results } = route.params;
-  const { username } = route.params;
+  //const { username } = route.params;
   //console.log(username)
 
   const tmaColor = getTmaColor(results.TMA);
@@ -24,7 +24,7 @@ const ResultsScreen = ({ route, navigation }) => {
         <Text style={styles.label}>TMA: {results.TMA} ppm</Text>
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home', { username })}> 
+      <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}> 
         <Text style={styles.buttonText}>Back to Home</Text>
       </TouchableOpacity>
     </SafeAreaView>

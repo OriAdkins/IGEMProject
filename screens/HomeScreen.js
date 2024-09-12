@@ -4,6 +4,7 @@ import { View, Text, Modal, SafeAreaView, TouchableOpacity, StyleSheet, Image } 
 
 // home screen function
 function HomeScreen({ route ,navigation }) {
+  // how to keep this variable when user comes back from results.
   const { username } = route.params;
   const [modalVisible, setModalVisible] = useState(false); // state to set modal visible
   const [selectedDevice, setSelectedDevice] = useState('Connect to Device'); // state to track selected device
@@ -40,6 +41,7 @@ function HomeScreen({ route ,navigation }) {
       TMA: 30  // example value
     };
     navigation.navigate('Results', { results });
+    //navigation.navigate('Results', { results , username: data.username });
   };
   
 
