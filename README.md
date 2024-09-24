@@ -56,14 +56,14 @@ initialRouteName: Defines the initial screen shown when the app starts (Login).
 
 * User Login: Allows a user to login with a username and password. 
   * Would be further expanded upon using an external database to store user info, allowing for secure access to private data\
-  * Planned Technologies: Firebase - DB, or a SQL server instance to store persistent data\
-* Device List/Connection: Allows a user to find, and ‘pair’ a device to their app.\
-  * Would later be expanded upon using an external API to connect to a real TMAU scanner, however since the scanner is still in development, this feature is here for demonstration purposes\
-  * Planned Library: react native BLE manager\
-* Scanner Test: Allows a user to perform a ‘test’ or ‘scan’ using their connected scanner\
-  * As of now, this takes the user to a mock results screen, where results will be displayed. Currently this shows a mock value, as the scanner is still in development.\
-  * On future versions, this screen would take in the data from the scanner, parse through it, and print out results based on the data stream from the scanner.\
-  * Planned Technologies: TMAU Scanner being developed by IGEM, parse through data with bluetooth manager.\
+  * Planned Technologies: Firebase - DB, or a SQL server instance to store persistent data
+* Device List/Connection: Allows a user to find, and ‘pair’ a device to their app.
+  * Would later be expanded upon using an external API to connect to a real TMAU scanner, however since the scanner is still in development, this feature is here for demonstration purposes
+  * Planned Library: react native BLE manager
+* Scanner Test: Allows a user to perform a ‘test’ or ‘scan’ using their connected scanner
+  * As of now, this takes the user to a mock results screen, where results will be displayed. Currently this shows a mock value, as the scanner is still in development.
+  * On future versions, this screen would take in the data from the scanner, parse through it, and print out results based on the data stream from the scanner.
+  * Planned Technologies: TMAU Scanner being developed by IGEM, parse through data with bluetooth manager.
 
 
 
